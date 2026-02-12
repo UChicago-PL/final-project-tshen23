@@ -1,0 +1,43 @@
+For my project, I want to use Haskell to create a custom index construction
+and backtesting framework for analyzing investment strategies. I hope to be
+able to create a tool in which I can simply upload CSV files with historical
+price data of specific investments (ex. Gold, S&P 500, etc.) and be able to
+both test indexes I have create and have my code generate an index in which
+it believes is the most optimal.
+
+I was inspired to do this after my interviewer asked me to do something like
+this. While I did good on the CS side of things (I know python pretty well),
+I struggled at a lot of stat concepts such as mean-reversion and momentum. I
+would love to take another shot at this idea, and find it really interesting
+in general.
+
+Easy project goals include parsing CSV files from a specified folder, defining
+a hardcoded sample index (such as equal-weighted top 20 stocks by market cap),
+calculating basic performance metrics like returns and volatility over a 
+historical period without rebalancing, and exporting the results to CSV or
+text files for analysis.
+
+Medium project goals would build on this by creating the abilty to write and
+upload custom indexes through configuration files/IO. This would include support
+for selection criteria (ex. market cap thresholds), multiple weighting schemes 
+(ex. equal-weight, market-cap-weight), and rebalancing rules (ex. quarterly). 
+In addition, I think it would be cool to implement visualization capabilities
+using Haskell's Chart library to generate performance comparison graphs showing
+how different index strategies perform against benchmarks over time.
+
+Challenging project goals would incorporate portfolio optimization 
+capabilities, where the system can generate optimal index weights given certain 
+constraints and objectives (such as minimizing tracking error or maximizing 
+Sharpe ratio). More importantly, this tier would include proper bias prevention 
+mechanisms: ensuring no look-ahead bias (only using data available at each 
+rebalancing date) and handling survivorship bias (accounting for delisted or 
+bankrupt stocks). Admittedly, this is pretty hard, but I think the challenge
+would be quite fun.
+
+I'll definitely need to teach myself a bit to finish this. In general, while
+we've gone over basic IO, we haven't gotten to parsing just yet, so I'll likely
+have to read ahead to get that done. Furthermore, we haven't learned the
+visualization libraries that Haskell has, so I'll need to explore that further.
+In general, I'm sure that there is going to be more stuff I will have to learn,
+but I still should hopefully be able to learn those topics before the class
+ends. Excited to get started!
