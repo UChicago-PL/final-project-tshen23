@@ -1,0 +1,5 @@
+Part 2 Update:
+
+Should've finished all of the easy goals, and began the medium ones (technically still
+hardcoding indexes using indexes.txt, but that is configureable already) - I plan on
+adding configuration rules later, including an option that allows for graph generation
