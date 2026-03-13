@@ -7,13 +7,13 @@ import shutil
 
 FOLDER = "assets"
 
-# add any assets as needed
+# add any assets as needed, highly recommend investables
 tickers = {
-    "sp500": "^GSPC",
-    "gold": "GC=F",
+    "sp500": "SPY",
+    "gold": "GLD",
     "bonds": "AGG",
-    "nasdaq": "^IXIC",
-    "vix": "^VIX",
+    "nasdaq": "QQQ",
+    "dowjones": "DIA",
 }
 
 if os.path.exists(FOLDER):
@@ -21,4 +21,4 @@ if os.path.exists(FOLDER):
 os.makedirs(FOLDER)
 
 for name, ticker in tickers.items():
-    yf.download(ticker, start="2014-01-01", end="2024-01-01").to_csv(f"{FOLDER}/{name}.csv")
+    yf.download(ticker, start="2005-01-01", end="2025-01-01").to_csv(f"{FOLDER}/{name}.csv")

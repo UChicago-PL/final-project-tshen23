@@ -3,14 +3,19 @@ module Index where
 import Types
 import Data.List ( sortBy )
 import Data.Ord ( comparing )
+import Data.Time ( Day )
 
 -- parse a single line like "my_index, sp500 0.5, gold 0.5"
 parseIndexSpec :: String -> Maybe IndexSpec
-parseIndexSpec line = case splitOn ',' line of
-    (n:ws) -> case mapMaybe parseWeight ws of
-        [] -> Nothing
-        xs -> Just $ IndexSpec (trim n) xs
-    _ -> Nothing
+parseIndexSpec line = case words line of
+    [n, "sharpe", lb, hm] -> case (reads lb, reads hm) of
+        ([(lbv, "")], [(hmv, "")]) -> Just $ SharpeIndex n lbv hmv
+        _ -> Nothing
+    _ -> case splitOn ',' line of
+        (n:ws) -> case mapMaybe parseWeight ws of
+            [] -> Nothing
+            xs -> Just $ ManualIndex (trim n) xs
+        _ -> Nothing
 
 parseWeight :: String -> Maybe (String, Double)
 parseWeight s = case words (trim s) of
@@ -48,6 +53,18 @@ blendReturns pairs =
         minLen = minimum (map length returnSeries)
         trimmed = map (take minLen) returnSeries
     in foldr1 (zipWith (+)) trimmed
+
+-- blendReturns but keeps dates for charts
+blendReturnsDated :: [(Asset, Double)] -> [(Day, Double)]
+blendReturnsDated [] = []
+blendReturnsDated pairs =
+    let sorted = map (\(a, w) -> (sortBy (comparing date) (rows a), w)) pairs
+        dates = map date (fst (head sorted))
+        returns = map (\(rs, w) -> map (* w) (dailyReturns rs)) sorted
+        minLen = minimum (map length returns)
+        trimmed = map (take minLen) returns
+        blended = foldr1 (zipWith (+)) trimmed
+    in zip (drop 1 (take (minLen + 1) dates)) blended
 
 -- trim helper
 trim :: String -> String

@@ -10,6 +10,26 @@
   (major1) == 0 && (major2) <  1 || \
   (major1) == 0 && (major2) == 1 && (minor) <= 0)
 #endif /* MIN_VERSION_final_project_tshen23 */
+/* package Chart-1.9.5 */
+#ifndef VERSION_Chart
+#define VERSION_Chart "1.9.5"
+#endif /* VERSION_Chart */
+#ifndef MIN_VERSION_Chart
+#define MIN_VERSION_Chart(major1,major2,minor) (\
+  (major1) <  1 || \
+  (major1) == 1 && (major2) <  9 || \
+  (major1) == 1 && (major2) == 9 && (minor) <= 5)
+#endif /* MIN_VERSION_Chart */
+/* package Chart-diagrams-1.9.5.1 */
+#ifndef VERSION_Chart_diagrams
+#define VERSION_Chart_diagrams "1.9.5.1"
+#endif /* VERSION_Chart_diagrams */
+#ifndef MIN_VERSION_Chart_diagrams
+#define MIN_VERSION_Chart_diagrams(major1,major2,minor) (\
+  (major1) <  1 || \
+  (major1) == 1 && (major2) <  9 || \
+  (major1) == 1 && (major2) == 9 && (minor) <= 5)
+#endif /* MIN_VERSION_Chart_diagrams */
 /* package base-4.18.3.0 */
 #ifndef VERSION_base
 #define VERSION_base "4.18.3.0"
@@ -20,6 +40,26 @@
   (major1) == 4 && (major2) <  18 || \
   (major1) == 4 && (major2) == 18 && (minor) <= 3)
 #endif /* MIN_VERSION_base */
+/* package colour-2.3.6 */
+#ifndef VERSION_colour
+#define VERSION_colour "2.3.6"
+#endif /* VERSION_colour */
+#ifndef MIN_VERSION_colour
+#define MIN_VERSION_colour(major1,major2,minor) (\
+  (major1) <  2 || \
+  (major1) == 2 && (major2) <  3 || \
+  (major1) == 2 && (major2) == 3 && (minor) <= 6)
+#endif /* MIN_VERSION_colour */
+/* package data-default-class-0.2.0.0 */
+#ifndef VERSION_data_default_class
+#define VERSION_data_default_class "0.2.0.0"
+#endif /* VERSION_data_default_class */
+#ifndef MIN_VERSION_data_default_class
+#define MIN_VERSION_data_default_class(major1,major2,minor) (\
+  (major1) <  0 || \
+  (major1) == 0 && (major2) <  2 || \
+  (major1) == 0 && (major2) == 2 && (minor) <= 0)
+#endif /* MIN_VERSION_data_default_class */
 /* package directory-1.3.8.5 */
 #ifndef VERSION_directory
 #define VERSION_directory "1.3.8.5"

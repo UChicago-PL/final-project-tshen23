@@ -1,0 +1,83 @@
+Overview
+
+This project is a Haskell program for constructing custom investment indexes, 
+backtesting their historical performance, and visualizing the results as a 
+chart. We define indexes in a plain text file, runs the program, and get
+back a CSV of performance metrics and an SVG chart showing how each index 
+grew over time. The project also includes a Sharpe ratio optimizer that 
+tries to find the best asset weights for a given historical period using a
+rolling window approach.
+
+
+Running the Program
+
+First, run the provided yahoo_finance.py script with 'python yahoo_finance.py' 
+to download price data for the assets into the assets/ folder. Feel free to 
+modify the script as needed (changing assets/period) from the script as needed, 
+just make sure the names match what is written in indexes.txt. Also note-
+try and avoid misaligning dates (ex. an asset doesnt start until 2020 while
+the others start in 2005).
+
+Next, edit indexes.txt to define the indexes you want to backtest. Each line 
+is either a manual index in the format 'name, asset1 weight1, asset2 weight2, 
+...' where weights sum to 1, or a Sharpe-optimized index in the format 'name 
+sharpe LB HM' where LB is the lookback window in months and HM is the holding 
+period in months, ex.: 'my index, sp500 0.5, gold 0.5' or 'aggressive sharpe
+3 1'.
+
+Then run 'cabal run' to execute the Haskell program. This produces two 
+output files: results.csv containing total return, annualized return, 
+volatility, and Sharpe ratio for each index, and performance.svg which is a 
+chart you can open showing the cumulative growth of each index over time.
+
+
+Code Organization
+
+Types.hs defines the core data types. PriceRow holds a single date and closing 
+price. Asset holds a name and a list of PriceRows. IndexSpec is either a 
+ManualIndex with a name and list of asset weights, or a SharpeIndex with a name 
+and lookback and holding period parameters. Metrics holds the four summary 
+statistics computed for each index.
+
+Parse.hs handles reading Yahoo Finance CSV files. stripHeaders drops the three 
+metadata rows Yahoo Finance adds at the top. parseRow parses a single line into 
+a PriceRow, handling date formatting and numeric parsing. loadAsset ties these 
+together to produce an Asset from a file's contents.
+
+Index.hs handles index construction. parseIndexSpec parses a single line from 
+indexes.txt into an IndexSpec, handling both the manual and sharpe formats. 
+loadIndexSpecs reads the whole file. dailyReturns converts a price series into 
+a series of daily returns. blendReturns combines multiple assets into a single 
+return series by weight. blendReturnsDated does the same but keeps dates 
+attached to each return, which is needed for charting.
+
+Metrics.hs computes performance statistics from a return series. 
+computeTotalReturn compounds daily returns into a total growth factor. 
+computeAnnualizedReturn scales that to a yearly rate. computeVolatility 
+computes annualized standard deviation. computeSharpe computes the Sharpe ratio 
+given a risk-free rate. computeMetrics wraps all four into a Metrics value.
+
+Optimize.hs implements the Sharpe ratio optimizer. weightCombinations generates 
+every possible weight vector for n assets in 0.1 increments that sum to 1. 
+sharpeForWeights computes the Sharpe ratio for a given set of assets and 
+weights. optimizeWeights runs the grid search and returns the best weight 
+vector.
+
+Rebalance.hs implements the rolling window backtest. sliceAsset filters an 
+asset's price rows to a date range. rebalanceDates generates a list of 
+rebalancing dates spaced by a given number of months. runPeriod takes one 
+rebalancing period, optimizes weights on the training window, and applies them 
+to the holding period. rollingOptimize ties these together into one continuous 
+dated return series.
+
+Visualize.hs handles chart generation. cumulativeSeries converts a dated daily 
+return series into a cumulative growth curve starting at 1.0. renderChart takes 
+a list of named series, converts each to a cumulative curve, and writes a 
+labeled line chart to an SVG file using Haskell's Chart library.
+
+Main.hs ties everything together. It loads all CSVs from the assets/ folder, 
+parses indexes.txt, uses bond returns as the risk-free rate, computes metrics 
+and dated series for each index, writes results.csv, and renders 
+performance.svg.
+
+This was a really fun project, and hopefully I'd impress quant interviewers!

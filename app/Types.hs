@@ -12,10 +12,16 @@ data Asset = Asset
   , rows :: [PriceRow]
   } deriving (Show)
 
-data IndexSpec = IndexSpec
-  { indexName :: String
-  , weights :: [(String, Double)]
-  } deriving (Show)
+data IndexSpec = ManualIndex
+    { indexName :: String
+    , weights   :: [(String, Double)]
+    }
+  | SharpeIndex String Int Int
+  deriving (Show)
+
+getIndexName :: IndexSpec -> String
+getIndexName (ManualIndex n _) = n
+getIndexName (SharpeIndex n _ _) = n
 
 data Metrics = Metrics
   { totalReturn :: Double

@@ -8,6 +8,11 @@ my_index, sp500 0.5, gold 0.5
 conservative, bonds 0.7, sp500 0.3
 everything, sp500 0.2, gold 0.2, bonds 0.2, nasdaq 0.2, vix 0.2
 ```
+Here's the format for the sharpe ratio optimizer (lookback window, holding period in months):
+```
+aggressive sharpe 3 1
+conservative sharpe 12 3
+```
 
 Please Note:
 - Asset names must match the CSV filenames in `assets/` (without `.csv`)
@@ -19,6 +24,7 @@ cabal run
 ```
 
 Results are written to `results.csv`.
+Performance graph is written to `performance.svg`.
 
 Progress reports are in `\reports`.
 
