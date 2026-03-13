@@ -9,9 +9,10 @@ import Data.Ord ( comparing )
 -- generate all weight combinations for n assets that sum to 1
 -- using 0.1 step size
 weightCombinations :: Int -> [[Double]]
-weightCombinations n = filter sumToOne (sequence (replicate n steps)) where
-    steps = [0.0, 0.1 .. 1.0]
-    sumToOne ws = abs (sum ws - 1.0) < 1e-9
+weightCombinations n = map (map (/10)) (go n 10) where
+    go 0 0 = [[]]
+    go 0 _ = []
+    go k remaining = [w : rest | w <- [0..remaining], rest <- go (k-1) (remaining-w)]
 
 -- compute sharpe for a given set of assets and weights
 -- over a specific date range
